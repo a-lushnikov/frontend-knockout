@@ -1,0 +1,22 @@
+{
+  "name": "frontend-knockout",
+  "version": "1.0.0",
+  "homepage": "https://github.com/genesisuda/fontend-knockout",
+  "authors": [
+    "Anatoliy Lushnikov <toliantm@narod.ru>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}

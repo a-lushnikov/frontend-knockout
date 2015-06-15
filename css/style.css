@@ -1,0 +1,32 @@
+html, body {
+	height: 100%;
+}
+
+.fullheight {
+	height: 100%;
+}
+
+.fullwidth {
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.topnav {
+	height: 52px;
+}
+
+/* 	bootstrap has absolutely crazy header which really stands out
+	need to provide calc() hack to avoid proper resizing
+*/
+.workspace {
+	height: calc(100% - 52px);
+	margin-left: 0px;
+	margin-right: 0px;
+	padding-top: 10px;
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
