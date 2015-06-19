@@ -42,19 +42,12 @@ html, body {
 }
 
 .location {
-	padding-top: 10px;
-	padding-bottom: 10px;
 }
 
 .location * {
 	padding-left: 0px;
 	padding-right: 0px;
 }
-
-/*.locations hr {
-	margin-top: 7px;
-	margin-bottom: 7px;
-}*/
 
 .location:hover {
 	background-color: #f7f7f9
@@ -76,11 +69,14 @@ html, body {
 /*
 	Instead of getting jquery version specifically for my needs with navbar
 	collapse width set properly adding this code as suggested in
-	http://stackoverflow.com/questions/18192082/bootstrap-3-navbar-collapse
+	http://stackoverflow.com/questions/19703550/twitter-bootstrap-3-navbar-collapse-set-width-to-collapse
 */
-@media (max-width: 1199px) {
+@media (max-width: 1050px) {
     .navbar-header {
         float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
     }
     .navbar-toggle {
         display: block;
@@ -89,31 +85,27 @@ html, body {
         border-top: 1px solid transparent;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
     }
+    .navbar-fixed-top {
+		top: 0;
+		border-width: 0 0 1px;
+	}
     .navbar-collapse.collapse {
         display: none!important;
     }
     .navbar-nav {
         float: none!important;
-        margin: 7.5px -15px;
-    }
-    .navbar-nav>li {
+		margin-top: 7.5px;
+	}
+	.navbar-nav>li {
         float: none;
     }
     .navbar-nav>li>a {
         padding-top: 10px;
         padding-bottom: 10px;
     }
-    .navbar-text {
-        float: none;
-        margin: 15px 0;
-    }
-    /* since 3.1.0 */
-    .navbar-collapse.collapse.in {
-        display: block!important;
-    }
-    .collapsing {
-        overflow: hidden!important;
-    }
+    .collapse.in{
+  		display:block !important;
+	}
 }
 
 .mymodal-dialog {
