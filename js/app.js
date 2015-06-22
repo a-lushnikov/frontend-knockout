@@ -1,6 +1,7 @@
 'use strict';
 
-// TODO : move to server side and do not show to anyone ;)
+$(document).ready(function () {
+    // TODO : move to server side and do not show to anyone ;)
 var forsquare_access = {
     clientId: '13VQ4NTCS0U33XREVAZLYWOPN3NXDNLHOGKL1SJNRAPZL0FZ',
     clientSecret: 'EUJ5KAQEQRFUFLIDNS21ZT4KQ3J5RX2XVAGY2YBOT21HGUVX'
@@ -9,6 +10,7 @@ var forsquare_access = {
 // instanciate once
 var geocoder = new google.maps.Geocoder();
 
+// Point of interest model to represent data of top pick place
 var Poi = function(placeName, contact, location, category, icon, opened) {
     this.placeName = ko.observable(placeName);
     this.contact = ko.observable(contact);
@@ -18,6 +20,7 @@ var Poi = function(placeName, contact, location, category, icon, opened) {
     this.opened = ko.observable(opened);
 }
 
+// Location found on the map
 var Location = function(location, marker) {
     var that = this;
     this.location = location;
@@ -41,6 +44,7 @@ var Location = function(location, marker) {
         $('#placesModal').modal('show');
     });
 
+    // get place name by lat / lng
     geocoder.geocode({
         'latLng': location
     }, function(results, status) {
@@ -73,6 +77,7 @@ var Location = function(location, marker) {
         marker.setTitle(that.address());
     });
 
+    // get at most 8 top picks locations from forsquare
     $.ajax('https://api.foursquare.com/v2/venues/explore?' + $.param({
         ll: this.location.lat() + ',' + this.location.lng(),
         client_id: forsquare_access.clientId,
@@ -121,6 +126,7 @@ var Location = function(location, marker) {
     });
 };
 
+// knockout view model
 var ViewModel = function() {
     var that = this;
 
@@ -130,10 +136,7 @@ var ViewModel = function() {
 
     this.selectedLocation = ko.observable();
 
-    this.locations = ko.observableArray([
-        // Moscow, Red Square
-        // new Location(new google.maps.LatLng(55.75393, 37.620795000000044))
-    ]);
+    this.locations = ko.observableArray([]); // no locations by default
 
     this.selectLocation = function(place) {
         that.selectedLocation(place);
@@ -192,5 +195,7 @@ var ViewModel = function() {
     };
 };
 
-var viewModel = new ViewModel();
+window.viewModel = new ViewModel();
 ko.applyBindings(viewModel);
+
+});

@@ -42,6 +42,13 @@ html, body {
 }
 
 .location {
+/* 	BUG:
+	Looks like chrome does not fire mouseover event properly when element has padding
+	This sometimes forces markers on the map to bounce only once. This issue does not
+	appear in IE or FF
+*/
+/*	padding-top: 10px;
+	padding-bottom: 10px;*/
 }
 
 .location * {

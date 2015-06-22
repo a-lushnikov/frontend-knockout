@@ -1,71 +1,59 @@
 var gulp = require('gulp'),
     minifycss = require('gulp-minify-css'),
     uglify = require('gulp-uglify'),
-    imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
+    concat = require('gulp-concat'),
+    htmlreplace = require('gulp-html-replace')
     del = require('del');
+
+
+// create build folder
+// minify and concat js and place it in all.min.js
+// minify and concat css and place it in all.min.css
+// copy
+// | index.html
+// | all.min.css
+// | all.min.js
+// to the build folder
+// replace references in index.html with all.min.css and all.min.js
+
+// copies index to build folder and replaces references
+gulp.task('copy-index', function() {
+  return gulp.src(['index.html'])
+    .pipe(htmlreplace({
+        'css': 'css/all.min.css',
+        'js': 'js/all.min.js'
+    }))
+    .pipe(gulp.dest('build'));
+});
+
+// copies js to build folder
+gulp.task('build-js', function() {
+  return gulp.src(['bower_components/jquery/dist/jquery.min.js', 'bower_components/knockout/dist/knockout.js', 'js/**'])
+    .pipe(uglify())
+    .pipe(concat('all.min.js'))
+    .pipe(gulp.dest('build/js'));
+});
+
+// copies css to build folder
+gulp.task('build-css', function() {
+  return gulp.src(['css/bootstrap.min.css', 'css/style.css'])
+    .pipe(minifycss())
+    .pipe(concat('all.min.css'))
+    .pipe(gulp.dest('build/css'));
+});
+
 
 // removes already existing build dir
 gulp.task('clean', function () {
-    del('build');
-    del('views/css/*.min.css');
-    del('css/*.min.css');
-    del('views/js/*.min.js');
-    del('js/*.min.js');
-    del('img/*o3*');
-})
-
-// copies src to deploy folder
-// gulp.task('deploy', function() {
-//     return gulp.src(['./**/*', '!node_modules', '!node_modules/**/*'])
-//         .pipe(gulp.dest('build'))
-//         .on('end', function () {
-//             del('build/gulpfile.js');
-//             del('build/package.json');
-//         });
-// });
-
-gulp.task('min-css1', function() {
-  return gulp.src('css/*.css')
-    .pipe(rename({suffix: '.min'}))
-    .pipe(minifycss())
-    .pipe(gulp.dest('css/'));
+    del('build/**/*');
 });
 
-gulp.task('min-css2', function() {
-  return gulp.src('views/css/*.css')
-    .pipe(rename({suffix: '.min'}))
-    .pipe(minifycss())
-    .pipe(gulp.dest('views/css/'));
+
+
+gulp.task('build', ['copy-index', 'build-js', 'build-css']);
+
+gulp.task('default', ['clean'], function() {
+    gulp.start('build');
 });
-
-gulp.task('min-css', ['min-css1', 'min-css2']);
-
-gulp.task('min-js1', function() {
-  return gulp.src('js/*.js')
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('js/'));
-});
-
-gulp.task('min-js2', function() {
-  return gulp.src('views/js/*.js')
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('views/js/'));
-});
-
-gulp.task('min-js', ['min-js1', 'min-js2']);
-
-
-// adopted from https://markgoodyear.com/2014/01/getting-started-with-gulp/
-// use this to get optmized images
-gulp.task('img', function() {
-  return gulp.src('img/**/*')
-    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-    .pipe(rename({suffix: 'o3'}))
-    .pipe(gulp.dest('img'))
-});
-
-gulp.task('min', ['min-css', 'min-js', 'img']);
 
