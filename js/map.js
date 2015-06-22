@@ -53,7 +53,7 @@ function createMap() {
             map: map,
             title: 'NewLocation'
         });
-    }
+    };
 
     google.maps.event.addListener(map, 'dblclick', function(event) {
         clearTimeout(update_timeout);

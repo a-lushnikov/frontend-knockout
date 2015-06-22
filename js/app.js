@@ -18,7 +18,7 @@ var Poi = function(placeName, contact, location, category, icon, opened) {
     this.category = ko.observable(category);
     this.icon = ko.observable(icon);
     this.opened = ko.observable(opened);
-}
+};
 
 // Location found on the map
 var Location = function(location, marker) {
@@ -140,18 +140,18 @@ var ViewModel = function() {
 
     this.selectLocation = function(place) {
         that.selectedLocation(place);
-    }
+    };
 
     this.i = 0;
     this.startBounce = function(place) {
         console.log('bounce started > ' + (that.i++));
         place.marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
+    };
 
     this.stopBounce = function(place) {
         console.log('bounce stopped <' + (that.i++));
         place.marker.setAnimation(null);
-    }
+    };
 
     this.filterLocations = function() {
         // do nothing in case we have no filtering options
@@ -196,6 +196,6 @@ var ViewModel = function() {
 };
 
 window.viewModel = new ViewModel();
-ko.applyBindings(viewModel);
+ko.applyBindings(window.viewModel);
 
 });
