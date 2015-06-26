@@ -3,11 +3,11 @@
 
 <head>
     <title>Places</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/all.min.css">
 
-
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="js/all.min.js"></script>
 
     <!--
@@ -19,17 +19,16 @@
 <body>
     <div id="wrapper" class="container-fluid fullheight no-offsets">
         <div id="sidebar-wrapper">
-        	<div class="navbar-default sidebar-title">Selected places</div>
+            <div class="navbar-default sidebar-title">Selected places</div>
             <div class="container-fluid locations" data-bind="foreach: locations">
-                    <div class="row location" data-toggle="modal" data-target="#placesModal" data-bind="click: $parent.selectLocation, event: { mouseover: $parent.startBounce, mouseout: $parent.stopBounce }">
-                        <div class="col-xs-12">
-                            <div data-bind="text: address"></div>
-                        </div>
+                <div class="row location" data-toggle="modal" data-target="#placesModal" data-bind="click: $parent.selectLocation, event: { mouseover: $parent.startBounce, mouseout: $parent.stopBounce }">
+                    <div class="col-xs-12">
+                        <div data-bind="text: address"></div>
                     </div>
-                    <hr/>
+                </div>
+                <hr/>
             </div>
         </div>
-
         <!-- bootstraps navigation should be wrapped into some container -->
         <div class="topnav">
             <!-- requires both navbar-default and navbar-static-top to become responsive -->
@@ -53,7 +52,6 @@
                                 <input type="text" class="form-control" placeholder="Country" data-bind="value: filterCountry">
                                 <input type="text" class="form-control" placeholder="City" data-bind="value: filterCity">
                                 <input type="text" class="form-control" placeholder="Street" data-bind="value: filterStreet">
-
                                 <input id="place-filter" type="text" class="form-control" placeholder="Search">
                                 <button id="menu-toggle" class="btn btn-default">Show selected</button>
                             </div>
@@ -73,7 +71,6 @@
                 <div id="map"></div>
             </div>
         </div>
-
         <!-- Modal -->
         <div class="modal fade" id="placesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-bind="with: selectedLocation">
             <div class="mymodal-dialog" role="document">
@@ -91,7 +88,7 @@
                                     <table class="poi">
                                         <tr>
                                             <td colspan="2" style="text-align: center;">
-                                                <img src="" data-bind="attr: {src: icon}" style="background-color: blue;">
+                                                <img src="#" data-bind="attr: {src: icon}" style="background-color: blue;" alt="Category">
                                             </td>
                                         </tr>
                                         <tr>
@@ -99,7 +96,7 @@
                                                 <strong>Place Name:</strong>
                                             </td>
                                             <td>
-                                                <div data-bind="text: placeName" />
+                                                <div data-bind="text: placeName"></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -107,7 +104,7 @@
                                                 <strong>Contact: </strong>
                                             </td>
                                             <td>
-                                                <div class="data-data" data-bind="text: contact" />
+                                                <div class="data-data" data-bind="text: contact"></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -115,7 +112,7 @@
                                                 <strong>Location:</strong>
                                             </td>
                                             <td>
-                                                <div class="data-data" data-bind="text: location">
+                                                <div class="data-data" data-bind="text: location"></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -123,7 +120,7 @@
                                                 <strong>Category:</strong>
                                             </td>
                                             <td>
-                                                <div class="data-data" data-bind="text: category" />
+                                                <div class="data-data" data-bind="text: category"></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -131,56 +128,54 @@
                                                 <strong>Opened:</strong>
                                             </td>
                                             <td>
-                                                <div class="data-data" data-bind="text: opened" />
+                                                <div class="data-data" data-bind="text: opened"></div>
                                             </td>
                                         </tr>
                                     </table>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="howToLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="howToLabel">How to use</h4>
+        </div>
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="howToLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="howToLabel">How to use</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <ul>
+                                <li>
+                                    <div>
+                                        Double click on the map to place marker.
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        Single click on marker or entry on the left to see information.
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        You can filter places using form in nav bar. Filtering option is "contains". To remove from the selection places which do not have "test" in the street name type "test" in Street textbox and click "Filter" button.
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        Use "Reset" button to start new search
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <ul>
-                                    <li>
-                                        <div>
-                                            Double click on the map to place marker.
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            Single click on marker or entry on the left to see information.
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            You can filter already selected places by country/city/street. Use filter in the navigation bar on the top. Filtering option is "contains".
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            Use "Reset" button to start new search
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

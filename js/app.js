@@ -24,7 +24,6 @@ $(document).ready(function() {
     var Location = function(location, marker) {
         var that = this;
         this.location = location;
-        console.log(this.location);
         this.marker = marker;
 
         var defaultPlaceAddress = 'Fetching address...';
@@ -78,53 +77,65 @@ $(document).ready(function() {
             marker.setTitle(that.address());
         });
 
-        // get at most 8 top picks locations from forsquare
-        $.ajax('https://api.foursquare.com/v2/venues/explore?' + $.param({
-            ll: this.location.lat() + ',' + this.location.lng(),
-            client_id: forsquare_access.clientId,
-            client_secret: forsquare_access.clientSecret,
-            section: 'topPicks',
-            v: '20150618',
-            limit: 8,
-            radius: 200
-        })).success(function(response) {
+        var getPicks = function () {
+            var counter = 0;
+            // get at most 8 top picks locations from forsquare
+            $.ajax('https://api.foursquare.com/v2/venues/explore?' + $.param({
+                ll: location.lat() + ',' + location.lng(),
+                client_id: forsquare_access.clientId,
+                client_secret: forsquare_access.clientSecret,
+                section: 'topPicks',
+                v: '20150618',
+                limit: 8,
+                radius: 200
+            })).success(function(response) {
 
-            // extract top pick places from response
-            that.topPicks([]);
+                // extract top pick places from response
+                that.topPicks([]);
 
-            for (var i = 0, n = response.response.groups[0].items.length; i < n; i++) {
-                var item = response.response.groups[0].items[i].venue;
+                for (var i = 0, n = response.response.groups[0].items.length; i < n; i++) {
+                    var item = response.response.groups[0].items[i].venue;
 
-                var address = '---';
-                if (item.location && item.location.formattedAddress) {
-                    address = item.location.formattedAddress;
+                    var address = '---';
+                    if (item.location && item.location.formattedAddress) {
+                        address = item.location.formattedAddress;
+                    }
+
+                    var catName = '---';
+                    if (item.categories && item.categories[0] && item.categories[0].name) {
+                        catName = item.categories[0].name;
+                    }
+
+                    var icon = '';
+                    if (item.categories && item.categories[0] && item.categories[0].icon) {
+                        icon = item.categories[0].icon.prefix + '64' + item.categories[0].icon.suffix;
+                    }
+
+                    var hours = '';
+                    if (item.hours && item.hours.status) {
+                        hours = item.hours.status;
+                    }
+
+                    that.topPicks.push(
+                        new Poi(item.name || 'Unknown place',
+                            item.contact.formattedPhone || 'No contact specified',
+                            address,
+                            catName,
+                            icon,
+                            hours)
+                    );
                 }
-
-                var catName = '---';
-                if (item.categories && item.categories[0] && item.categories[0].name) {
-                    catName = item.categories[0].name;
+            }).fail(function() {
+                if(counter < 2) {
+                    counter = counter + 1;
+                    getPicks();
+                } else {
+                    alert('Ups. Something went wrong. We could have apologised, but that is either your connection or forsquare failing - not our beautiful website.');
                 }
+            });
+        };
 
-                var icon = '';
-                if (item.categories && item.categories[0] && item.categories[0].icon) {
-                    icon = item.categories[0].icon.prefix + '64' + item.categories[0].icon.suffix;
-                }
-
-                var hours = '';
-                if (item.hours && item.hours.status) {
-                    hours = item.hours.status;
-                }
-
-                that.topPicks.push(
-                    new Poi(item.name || 'Unknown place',
-                        item.contact.formattedPhone || 'No contact specified',
-                        address,
-                        catName,
-                        icon,
-                        hours)
-                );
-            }
-        });
+        getPicks();
     };
 
     // knockout view model

@@ -1,89 +1,95 @@
-html, body {
-	height: 100%;
+html,
+body {
+    height: 100%;
 }
 
 .fullheight {
-	height: 100%;
+    height: 100%;
 }
 
 .pad-left {
-	padding-left: 10px;
-	padding-right: 0;
+    padding-left: 10px;
+    padding-right: 0;
 }
 
 .fullwidth {
-	width: 100%;
-	padding-left: 0;
-	padding-right: 0;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .topnav {
-	height: 52px;
+    height: 52px;
 }
-
 /* 	bootstrap has absolutely crazy header which really stands out
 	need to provide calc() hack to avoid proper resizing
 */
+
 .workspace {
-	height: calc(100% - 52px);
-	margin-left: 0px;
-	margin-right: 0px;
-	padding-top: 10px;
+    height: calc(100% - 52px);
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 10px;
 }
 
 #map {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .locations {
-	height: calc(100% - 50px);
-	overflow-y: auto;
+    height: calc(100% - 50px);
+    overflow-y: auto;
 }
 
 .location {
-/* 	BUG:
+    /* 	BUG:
 	Looks like chrome does not fire mouseover event properly when element has padding
 	This sometimes forces markers on the map to bounce only once. This issue does not
 	appear in IE or FF
 */
-/*	padding-top: 10px;
+    /*	padding-top: 10px;
 	padding-bottom: 10px;*/
-	margin: 5px;
+
+    margin: 5px;
 }
 
 .location * {
-	padding-left: 0px;
-	padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .location:hover {
-	background-color: #f7f7f9
+    background-color: #f7f7f9
 }
 
 .data-label {
-	display: table-cell;
-	font-weight: bold;
-	min-width: 100px;
-	width: 100px;
-	max-width: 100px;
+    display: table-cell;
+    font-weight: bold;
+    min-width: 100px;
+    width: 100px;
+    max-width: 100px;
 }
 
 .poi {
-	width: 100%;
-	height: 265px;
+    width: 100%;
+    height: 265px;
 }
-
 /*
 	Instead of getting jquery version specifically for my needs with navbar
 	collapse width set properly adding this code as suggested in
 	http://stackoverflow.com/questions/19703550/twitter-bootstrap-3-navbar-collapse-set-width-to-collapse
 */
+
 @media (max-width: 1050px) {
     .navbar-header {
         float: none;
     }
-    .navbar-left,.navbar-right {
+    .navbar-left,
+    .navbar-right {
+        /*Probably !important is not cool, but I assume that is coming from
+        compiled bootstrap SASS*/
+
         float: none !important;
     }
     .navbar-toggle {
@@ -91,49 +97,46 @@ html, body {
     }
     .navbar-collapse {
         border-top: 1px solid transparent;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
     .navbar-fixed-top {
-		top: 0;
-		border-width: 0 0 1px;
-	}
+        top: 0;
+        border-width: 0 0 1px;
+    }
     .navbar-collapse.collapse {
         display: none!important;
     }
     .navbar-nav {
         float: none!important;
-		margin-top: 7.5px;
-	}
-	.navbar-nav>li {
+        margin-top: 7.5px;
+    }
+    .navbar-nav > li {
         float: none;
     }
-    .navbar-nav>li>a {
+    .navbar-nav > li > a {
         padding-top: 10px;
         padding-bottom: 10px;
     }
-    .collapse.in{
-  		display:block !important;
-	}
+    .collapse.in {
+        display: block !important;
+    }
 }
 
 .mymodal-dialog {
-	width: auto;
-	margin: 50px 50px;
+    width: auto;
+    margin: 50px 50px;
 }
 
 @media screen and (max-width: 600px) {
-	.mymodal-dialog {
-		width: auto;
-		margin: 30px 10px;
-	}
+    .mymodal-dialog {
+        width: auto;
+        margin: 30px 10px;
+    }
 }
-
-
 /*.modal .modal-body {
     max-height: 420px;
     overflow-y: auto;
 }*/
-
 /*.modal-content {
   height: calc(100vh - 100px);
 }*/
@@ -144,31 +147,31 @@ html, body {
 }
 
 .map-container {
-	position: relative;
+    position: relative;
 }
 
 #menu-toggle {
-	position: absolute;
-	top: 10px;
-	left: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 
 .sidebar-title {
-	height: 50px;
-	border-right: 1px solid #e7e7e7;
-	color: #777;
-	font-size: 18px;
-	line-height: 20px;
-	padding: 15px;
+    height: 50px;
+    border-right: 1px solid #e7e7e7;
+    color: #777;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 15px;
 }
 
 @media (max-width: 600px) {
-	.sidebar-title {
-		font-size: 16px;
-	}
+    .sidebar-title {
+        font-size: 16px;
+    }
 }
 
 .no-offsets {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
