@@ -23,7 +23,7 @@ This will create build folder with minified files and properly change references
 # Using application
 * Use mouse or double tap to place a marker on the map
 * Click list item on the left or marker to open modal with top picks for the place
-* You can filter places using form in nav bar. Filtering option is "contains". So to leave marker places having "test" in the street name type "test" in Street textbox and click "Filter" button
+* You can filter places using form in nav bar. Filtering option is "contains". You can filter places using form in nav bar. Filtering option is "contains". To remove from the selection places which do not have "test" in the street name type "test" in Street textbox and click "Filter" button.
 * Remove markers with "Reset" button
 
 
