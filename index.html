@@ -4,33 +4,40 @@
 <head>
     <title>Places</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<!-- build:css -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- build:css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-<!-- endbuild -->
+    <link rel="stylesheet" type="text/css" href="css/simple-sidebar.css">
+    <!-- endbuild -->
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
-
-<!-- build:js -->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- build:js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
-	<script type="text/javascript" src="js/map.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
-<!-- endbuild -->
-
-<!--
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <!-- endbuild -->
+    <!--
 	<link rel="stylesheet" type="text/css" href="css/all.min.css">
 	<script type="text/javascript" src="js/all.min.js"></script>
 -->
-
-
 </head>
 
 <body>
-    <div class="container-fluid fullheight">
+    <div id="wrapper" class="container-fluid fullheight no-offsets">
+        <div id="sidebar-wrapper">
+        	<div class="navbar-default sidebar-title">Selected places</div>
+            <div class="container-fluid locations" data-bind="foreach: locations">
+                    <div class="row location" data-toggle="modal" data-target="#placesModal" data-bind="click: $parent.selectLocation, event: { mouseover: $parent.startBounce, mouseout: $parent.stopBounce }">
+                        <div class="col-xs-12">
+                            <div data-bind="text: address"></div>
+                        </div>
+                    </div>
+                    <hr/>
+            </div>
+        </div>
+
         <!-- bootstraps navigation should be wrapped into some container -->
         <div class="topnav">
             <!-- requires both navbar-default and navbar-static-top to become responsive -->
@@ -66,21 +73,13 @@
                 </div>
             </nav>
         </div>
-        <div class="row workspace">
-            <div class="col-xs-3 col-md-2 fullheight nopadding">
-                <div class="container-fluid locations" data-bind="foreach: locations">
-                    <div class="row location" data-toggle="modal" data-target="#placesModal" data-bind="click: $parent.selectLocation, event: { mouseover: $parent.startBounce, mouseout: $parent.stopBounce }">
-                        <div class="col-xs-12">
-                            <div data-bind="text: address"></div>
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
-            </div>
-            <div class="col-xs-9 col-md-10 fullheight">
+        <div class="row workspace no-offsets">
+            <div class="col-xs-12 col-md-12 fullheight map-container no-offsets">
                 <div id="map"></div>
+                <button id="menu-toggle" class="btn btn-default">Show selected</button>
             </div>
         </div>
+
         <!-- Modal -->
         <div class="modal fade" id="placesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-bind="with: selectedLocation">
             <div class="mymodal-dialog" role="document">
@@ -94,103 +93,106 @@
                             <!-- FORSQUARE PLACES -->
                             <h4 class="text-center">Top places picked from Forsquare</h4>
                             <div class="row" data-bind="foreach: topPicks">
-                            	<div class="col-xs-12 col-md-4 col-lg-3">
-	                            	<table class="poi">
-	                            		<tr>
-	                            			<td colspan="2" style="text-align: center;">
-	                            				<img src="" data-bind="attr: {src: icon}" style="background-color: blue;">
-	                            			</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td class="data-label">
-	                            				<strong>Place Name:</strong>
-	                            			</td>
-	                            			<td>
-	                            				<div data-bind="text: placeName" />
-	                            			</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td class="data-label">
-	                            				<strong>Contact: </strong>
-	                            			</td>
-	                            			<td>
-	                            				<div class="data-data" data-bind="text: contact" />
-	                            			</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td class="data-label">
-	                            				<strong>Location:</strong>
-	                            			</td>
-	                            			<td>
-	                            				<div class="data-data" data-bind="text: location">
-	                            			</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td class="data-label">
-	                            				<strong>Category:</strong>
-	                            			</td>
-	                            			<td>
-	                            				<div class="data-data" data-bind="text: category" />
-	                            			</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td class="data-label">
-	                            				<strong>Opened:</strong>
-	                            			</td>
-	                            			<td>
-	                            				<div class="data-data" data-bind="text: opened" />
-	                            			</td>
-	                            		</tr>
-	                            	</table>
-                            	</div>
+                                <div class="col-xs-12 col-md-4 col-lg-3">
+                                    <table class="poi">
+                                        <tr>
+                                            <td colspan="2" style="text-align: center;">
+                                                <img src="" data-bind="attr: {src: icon}" style="background-color: blue;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="data-label">
+                                                <strong>Place Name:</strong>
+                                            </td>
+                                            <td>
+                                                <div data-bind="text: placeName" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="data-label">
+                                                <strong>Contact: </strong>
+                                            </td>
+                                            <td>
+                                                <div class="data-data" data-bind="text: contact" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="data-label">
+                                                <strong>Location:</strong>
+                                            </td>
+                                            <td>
+                                                <div class="data-data" data-bind="text: location">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="data-label">
+                                                <strong>Category:</strong>
+                                            </td>
+                                            <td>
+                                                <div class="data-data" data-bind="text: category" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="data-label">
+                                                <strong>Opened:</strong>
+                                            </td>
+                                            <td>
+                                                <div class="data-data" data-bind="text: opened" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">How to use</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                        	<ul>
-                        		<li>
-                        			<div>
-                        				Double click on the map to place marker.
-                        			</div>
-                        		</li>
-                        		<li>
-                        			<div>
-                        				Single click on marker or entry on the left to see information.
-                        			</div>
-                        		</li>
-                        		<li>
-                        			<div>
-                        				You can filter already selected places by country/city/street. Use filter in the navigation bar on the top. Filtering option is "contains".
-                        			</div>
-                        		</li>
-                        		<li>
-                        			<div>
-                        				Use "Reset" button to start new search
-                        			</div>
-                        		</li>
-                        	</ul>
+            <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="howToLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="howToLabel">How to use</h4>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <ul>
+                                    <li>
+                                        <div>
+                                            Double click on the map to place marker.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            Single click on marker or entry on the left to see information.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            You can filter already selected places by country/city/street. Use filter in the navigation bar on the top. Filtering option is "contains".
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            Use "Reset" button to start new search
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
+
 </html>

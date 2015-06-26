@@ -51,7 +51,8 @@ function createMap() {
         return new google.maps.Marker({
             position: position,
             map: map,
-            title: 'NewLocation'
+            title: 'NewLocation',
+            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
         });
     };
 
@@ -61,6 +62,11 @@ function createMap() {
         viewModel.addLocation(event.latLng, placeMarker(event.latLng));
         event.stop();
     });
+
+
+    // add places search
+
+    var input = document.getElementById('place-filter'));
 }
 
 function getLocation(placeName) {
