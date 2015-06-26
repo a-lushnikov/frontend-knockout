@@ -4,10 +4,9 @@ var map = null;
 var mapBounds = null;
 
 function createMap() {
-    var startingPoints = [
-        {
+    var startingPoints = [{
             placeName: 'New York, Metropolitan Opera House',
-            lat : 40.7731527,
+            lat: 40.7731527,
             lng: -73.98493630000002
         }
         // {
@@ -29,7 +28,10 @@ function createMap() {
         maxZoom: 25,
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        center: {lat: startingPoint.lat, lng: startingPoint.lng},
+        center: {
+            lat: startingPoint.lat,
+            lng: startingPoint.lng
+        },
         disableDoubleClickZoom: true
     };
 
@@ -41,13 +43,13 @@ function createMap() {
     //used to prevent single click events when doing double clicks
     var update_timeout = null;
 
-    google.maps.event.addListener(map, 'click', function(event){
-        update_timeout = setTimeout(function(){
+    google.maps.event.addListener(map, 'click', function(event) {
+        update_timeout = setTimeout(function() {
             // event fired in case of map click
         }, 200);
     });
 
-    var placeMarker = function (position) {
+    var placeMarker = function(position) {
         return new google.maps.Marker({
             position: position,
             map: map,
@@ -59,19 +61,45 @@ function createMap() {
     google.maps.event.addListener(map, 'dblclick', function(event) {
         clearTimeout(update_timeout);
 
-        viewModel.addLocation(event.latLng, placeMarker(event.latLng));
+        window.viewModel.addLocation(event.latLng, placeMarker(event.latLng));
         event.stop();
     });
 
-
     // add places search
+    var searchBox = document.getElementById('place-filter');
+    var menuButton = document.getElementById('menu-toggle');
 
-    var input = document.getElementById('place-filter'));
+    searchBox.style.maxWidth = '200px';
+    menuButton.style.width = 'auto';
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(menuButton);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchBox);
+
+    var autocomplete = new google.maps.places.Autocomplete(searchBox);
+    autocomplete.bindTo('bounds', map);
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            // silently quit
+            return;
+        }
+
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            window.viewModel.addLocation(place.geometry.location, placeMarker(place.geometry.location));
+        }
+    });
 }
 
 function getLocation(placeName) {
     var service = new google.maps.places.PlacesService(map);
-    service.textSearch({ query: placeName }, function(results, status) {
+    service.textSearch({
+        query: placeName
+    }, function(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             console.log(results[0].geometry.location.lat());
             console.log(results[0].geometry.location.lng());

@@ -61,6 +61,9 @@
                                 <input type="text" class="form-control" placeholder="Country" data-bind="value: filterCountry">
                                 <input type="text" class="form-control" placeholder="City" data-bind="value: filterCity">
                                 <input type="text" class="form-control" placeholder="Street" data-bind="value: filterStreet">
+
+                                <input id="place-filter" type="text" class="form-control" placeholder="Search">
+                                <button id="menu-toggle" class="btn btn-default">Show selected</button>
                             </div>
                             <button class="btn btn-primary" data-bind="click: filterLocations">Filter places!</button>
                             <button class="btn btn-warning" data-bind="click: clearLocations">Reset</button>
@@ -76,7 +79,6 @@
         <div class="row workspace no-offsets">
             <div class="col-xs-12 col-md-12 fullheight map-container no-offsets">
                 <div id="map"></div>
-                <button id="menu-toggle" class="btn btn-default">Show selected</button>
             </div>
         </div>
 
