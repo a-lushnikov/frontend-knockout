@@ -205,13 +205,13 @@ $(document).ready(function() {
     ko.applyBindings(window.viewModel);
 
     // bind sidebar
-    $("#menu-toggle").click(function(e) {
+    $('#menu-toggle').click(function(e) {
         e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
+        $('#wrapper').toggleClass('toggled');
 
         // triggering resize event to force google map redraw
         setTimeout(function() {
-            google.maps.event.trigger(map, "resize");
+            google.maps.event.trigger(map, 'resize');
         }, 1000);
     });
 
@@ -219,6 +219,6 @@ $(document).ready(function() {
     // but then google maps have issue with properly determining necessary
     // amount of tiles visible on screen
     if(Math.max(document.documentElement.clientWidth, window.innerWidth || 0) >= 768) {
-        $("#wrapper").toggleClass("toggled");
+        $('#wrapper').toggleClass('toggled');
     }
 });

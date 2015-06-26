@@ -37,7 +37,7 @@ gulp.task('build-js', function() {
 
 // copies css to build folder
 gulp.task('build-css', function() {
-  return gulp.src(['css/bootstrap.min.css', 'css/style.css'])
+  return gulp.src(['css/*.css'])
     .pipe(minifycss())
     .pipe(concat('all.min.css'))
     .pipe(gulp.dest('build/css'));
