@@ -28,4 +28,4 @@ This will create build folder with minified files and properly change references
 
 
 # Additional
-During the development discovered the bug (most probably in chrome) that mouseover event not fired correctly when element has padding or border. Check style.css for more information
+During the development discovered the bug (most probably in chrome) that mouseover event not fired correctly when element has padding or border. Check style.css for more information.
